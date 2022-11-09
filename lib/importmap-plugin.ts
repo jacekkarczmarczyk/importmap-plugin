@@ -33,7 +33,7 @@ function createImportMapScript (importMapAsset: OutputAsset, external?: boolean)
     : `<script type="importmap">${importMapSource}</script>`;
 }
 
-export default function StableHashPlugin ({ external = false }: StableHashOptions = {}): OutputPlugin {
+export default function ImportmapPlugin ({ external = false }: StableHashOptions = {}): OutputPlugin {
   const importMap: ImportMap = { imports: {} };
 
   return {
