@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "importHelpers": true,
+    "tsBuildInfoFile": ".tsbuildinfo",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "noUncheckedIndexedAccess": false,
+    "forceConsistentCasingInFileNames": true,
+    "useDefineForClassFields": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "lib": [
+      "esnext",
+      "scripthost"
+    ],
+    "types": [
+      "vuetify",
+      "node",
+      "vite/client"
+    ],
+  },
+  "include": [
+    "lib/**/*.ts",
+    ".eslintrc.js"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

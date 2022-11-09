@@ -1,0 +1,20 @@
+{
+  "name": "importmap-plugin",
+  "description": "Rollup importmap plugin",
+  "version": "0.0.1",
+  "private": false,
+  "scripts": {
+    "lint": "eslint . --ext .ts,.mts --ignore-path .gitignore",
+    "lint:fix": "eslint . --ext .ts,.mts --ignore-path .gitignore --fix"
+  },
+  "dependencies": {
+    "hash.js": "^1.1.7",
+    "rollup": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.9",
+    "eslint": "^8.27.0",
+    "eslint-config-jkarczm": "^10.0.0-beta.1",
+    "typescript": "^4.8.4"
+  }
+}
