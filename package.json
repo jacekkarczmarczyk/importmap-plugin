@@ -3,9 +3,13 @@
   "description": "Rollup importmap plugin",
   "version": "0.0.2",
   "private": false,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["/dist"],
   "scripts": {
     "lint": "eslint . --ext .ts,.mts --ignore-path .gitignore",
-    "lint:fix": "eslint . --ext .ts,.mts --ignore-path .gitignore --fix"
+    "lint:fix": "eslint . --ext .ts,.mts --ignore-path .gitignore --fix",
+    "build": "tsc"
   },
   "dependencies": {
     "hash.js": "^1.1.7",

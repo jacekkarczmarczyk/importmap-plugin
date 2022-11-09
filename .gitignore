@@ -1,4 +1,5 @@
 .idea
+dist
 
 # Dependency directories
 node_modules/
