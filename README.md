@@ -1,4 +1,4 @@
-# importmap
+# importmap-plugin
 Rollup import maps plugin
 
 # Usage
