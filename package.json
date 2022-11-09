@@ -1,7 +1,7 @@
 {
   "name": "importmap-plugin",
   "description": "Rollup importmap plugin",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": false,
   "scripts": {
     "lint": "eslint . --ext .ts,.mts --ignore-path .gitignore",
