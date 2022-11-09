@@ -2,7 +2,7 @@ import hash from 'hash.js';
 import fs from 'node:fs';
 import type { OutputAsset, OutputPlugin } from 'rollup';
 
-interface StableHashOptions {
+interface ImportmapPluginOptions {
   // External import maps are not supported yet
   external?: boolean;
 }
@@ -33,7 +33,7 @@ function createImportMapScript (importMapAsset: OutputAsset, external?: boolean)
     : `<script type="importmap">${importMapSource}</script>`;
 }
 
-export default function ImportmapPlugin ({ external = false }: StableHashOptions = {}): OutputPlugin {
+export default function ImportmapPlugin ({ external = false }: ImportmapPluginOptions = {}): OutputPlugin {
   const importMap: ImportMap = { imports: {} };
 
   return {
