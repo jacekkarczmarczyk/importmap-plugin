@@ -37,7 +37,7 @@ export default function ImportmapPlugin ({ external = false }: ImportmapPluginOp
   const importMap: ImportMap = { imports: {} };
 
   return {
-    name: 'stable-hash-plugin',
+    name: 'importmap-plugin',
     generateBundle (config, bundle) {
       importMap.imports = {};
 
