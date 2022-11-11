@@ -15,7 +15,7 @@ export default defineConfig({
         plugins: [
           ImportmapPlugin({
             base: '/',
-            external: true, // external import maps work only for SystemJs
+            external: true, // external import maps work only for SystemJS
           }),
         ],
       },
