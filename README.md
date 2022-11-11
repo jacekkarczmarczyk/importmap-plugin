@@ -9,10 +9,14 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
+        format: 'system', // 'system' or 'es'
         entryFileNames: 'app/index.js',
         chunkFileNames: 'chunks/[name].js', // DO NOT INCLUDE HASH HERE
         plugins: [
-          ImportmapPlugin(),
+          ImportmapPlugin({
+            base: '/',
+            external: true, // external import maps work only for SystemJs
+          }),
         ],
       },
     },
