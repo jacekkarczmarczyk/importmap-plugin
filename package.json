@@ -1,7 +1,7 @@
 {
   "name": "importmap-plugin",
   "description": "Rollup importmap plugin",
-  "version": "v0.1.0-beta.1",
+  "version": "v0.1.0",
   "private": false,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,7 +11,8 @@
   "scripts": {
     "lint": "eslint . --ext .ts,.mts --ignore-path .gitignore",
     "lint:fix": "eslint . --ext .ts,.mts --ignore-path .gitignore --fix",
-    "build": "tsc"
+    "build": "tsc",
+    "release": "git reset && git diff --name-status --exit-code HEAD && git checkout dev && pnpm run lint && cz-update-version && pnpm run build && node build/changelog.mjs && git add . && cz-commit --chore=release"
   },
   "dependencies": {
     "hash.js": "^1.1.7",
@@ -21,6 +22,8 @@
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
+    "conventional-changelog": "^3.1.25",
+    "cz-deploy": "1.0.0-rc.2",
     "eslint": "^8.27.0",
     "eslint-config-jkarczm": "^10.0.0-beta.1",
     "typescript": "^4.8.4"
