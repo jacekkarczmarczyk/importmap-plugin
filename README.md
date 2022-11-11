@@ -16,6 +16,7 @@ export default defineConfig({
           ImportmapPlugin({
             base: '/',
             external: true, // external import maps work only for SystemJS
+            indexHtml: 'index.html', // same us rollupOptions.input option
           }),
         ],
       },
