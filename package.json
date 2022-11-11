@@ -1,11 +1,13 @@
 {
   "name": "importmap-plugin",
   "description": "Rollup importmap plugin",
-  "version": "0.0.4",
+  "version": "0.1.0-alpha.2",
   "private": false,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": ["/dist"],
+  "files": [
+    "/dist"
+  ],
   "scripts": {
     "lint": "eslint . --ext .ts,.mts --ignore-path .gitignore",
     "lint:fix": "eslint . --ext .ts,.mts --ignore-path .gitignore --fix",
@@ -13,7 +15,9 @@
   },
   "dependencies": {
     "hash.js": "^1.1.7",
-    "rollup": "^3.0.0"
+    "magic-string": "^0.26.7",
+    "rollup": "^3.0.0",
+    "systemjs": "^6.13.0"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",

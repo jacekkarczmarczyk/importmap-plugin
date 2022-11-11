@@ -1,10 +1,10 @@
 import hash from 'hash.js';
 import fs from 'node:fs';
-import type { OutputAsset, OutputPlugin } from 'rollup';
+import type { OutputAsset, OutputChunk, OutputPlugin } from 'rollup';
 
 interface ImportmapPluginOptions {
-  // External import maps are not supported yet
-  external?: boolean;
+  base: string;
+  external: boolean;
 }
 
 interface ImportMap {
@@ -25,43 +25,75 @@ function createImportMapAsset (importMap: ImportMap): OutputAsset {
   };
 }
 
-function createImportMapScript (importMapAsset: OutputAsset, external?: boolean): string {
-  const importMapSource = String(importMapAsset.source);
+function createSystemJsChunk (): OutputChunk {
+  const systemJsCode = fs.readFileSync(require.resolve('systemjs/dist/s.js'), 'utf8');
+  const systemJsHash = hash.sha1().update(systemJsCode).digest('hex');
 
-  return external
-    ? `<script type="importmap" src="/${importMapAsset.fileName}"></script>`
-    : `<script type="importmap">${importMapSource}</script>`;
+  return {
+    fileName: `s.${systemJsHash}.js`,
+    code: systemJsCode,
+    name: 'systemJs',
+    type: 'chunk',
+    imports: [],
+    exports: [],
+    map: null,
+    dynamicImports: [],
+    facadeModuleId: null,
+    isEntry: false,
+    implicitlyLoadedBefore: [],
+    importedBindings: {},
+    isDynamicEntry: false,
+    modules: { },
+    referencedFiles: [],
+    isImplicitEntry: false,
+    moduleIds: [],
+  };
 }
 
-export default function ImportmapPlugin ({ external = false }: ImportmapPluginOptions = {}): OutputPlugin {
+function createImportMapScript (importMapAsset: OutputAsset, systemJs: boolean, external?: boolean): string {
+  const importMapSource = String(importMapAsset.source);
+  const type = systemJs ? 'systemjs-importmap' : 'importmap';
+
+  return external
+    ? `<script type="${type}" src="/${importMapAsset.fileName}"></script>`
+    : `<script type="${type}">${importMapSource}</script>`;
+}
+
+export default function ImportmapPlugin ({ base, external = false }: ImportmapPluginOptions): OutputPlugin {
   const importMap: ImportMap = { imports: {} };
 
   return {
     name: 'importmap-plugin',
     generateBundle (config, bundle) {
+      if (config.format !== 'system' && config.format !== 'es') {
+        throw new Error('Only system and es formats are supported');
+      }
+
       importMap.imports = {};
 
       Object.entries(bundle).forEach(([filename, chunk]) => {
         if (chunk.type !== 'chunk') return;
 
         const hashValue = hash.sha1().update(chunk.code).digest('hex');
-        const basePath = '/';
 
-        importMap.imports[`${basePath}${filename}`] = `${basePath}${filename}`.replace(/\.js$/, `.${hashValue}.js`);
+        importMap.imports[`${base}${filename}`] = `${base}${filename}`.replace(/\.js$/, `.${hashValue}.js`);
       });
 
-      bundle.importMap = createImportMapAsset(importMap);
+      if (external) {
+        bundle.importMap = createImportMapAsset(importMap);
+      }
+
+      if (config.format === 'system') {
+        bundle.systemJs = createSystemJsChunk();
+      }
     },
     writeBundle (config, bundle) {
       const { dir = './dist', entryFileNames } = config;
+      const systemJs = config.format === 'system';
+      const importMapAsset = (bundle.importMap as OutputAsset | undefined) ?? createImportMapAsset(importMap);
+      const importMapScript = createImportMapScript(importMapAsset, systemJs, external);
       const entryFileName = `/${String(entryFileNames)}`;
-      const importMapCode = createImportMapScript(bundle.importMap as OutputAsset, external);
       const indexPath = `${dir}/index.html`;
-      const indexHtml = fs.readFileSync(indexPath, 'utf-8');
-
-      if (!external) {
-        fs.unlinkSync(`${dir}/${bundle.importMap.fileName}`);
-      }
 
       Object.keys(importMap.imports).forEach(filename => {
         if (fs.existsSync(`${dir}${filename}`)) {
@@ -71,12 +103,13 @@ export default function ImportmapPlugin ({ external = false }: ImportmapPluginOp
         }
       });
 
-      fs.writeFileSync(
-        indexPath,
-        indexHtml
-          .replace('</title>', `</title>\n${importMapCode}`)
-          .replace(`src="${entryFileName}"`, `src="${importMap.imports[entryFileName]!}"`),
-      );
+      const indexHtml = fs
+        .readFileSync(indexPath, 'utf-8')
+        .replace('</title>', systemJs ? `</title>\n<script src="${base}${bundle.systemJs.fileName}"></script>\n${importMapScript}` : `</title>\n${importMapScript}`)
+        .replace('type="module"', systemJs ? 'type="systemjs-module"' : 'type="module"')
+        .replace(`src="${entryFileName}"`, `src="${importMap.imports[entryFileName]!}"`);
+
+      fs.writeFileSync(indexPath, indexHtml);
     },
   };
 }
