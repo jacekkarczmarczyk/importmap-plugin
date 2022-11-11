@@ -1,3 +1,12 @@
+## [0.5.3](https://github.com/jacekkarczmarczyk/importmap-plugin/compare/v0.5.2...v0.5.3) (2022-11-11)
+
+
+### Bug Fixes
+
+* better error handling ([55437dd](https://github.com/jacekkarczmarczyk/importmap-plugin/commit/55437dd3ae5afe6bc81c1db0a02cd51f3beaef7f))
+
+
+
 ## [0.5.2](https://github.com/jacekkarczmarczyk/importmap-plugin/compare/v0.5.1...v0.5.2) (2022-11-11)
 
 
