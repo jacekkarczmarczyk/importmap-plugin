@@ -1,7 +1,7 @@
 {
   "name": "importmap-plugin",
   "description": "Rollup importmap plugin",
-  "version": "v0.1.0",
+  "version": "0.2.0",
   "private": false,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
