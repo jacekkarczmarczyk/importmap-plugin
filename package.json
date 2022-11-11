@@ -13,7 +13,7 @@
     "lint:fix": "eslint . --ext .ts,.mts --ignore-path .gitignore --fix",
     "build": "tsc",
     "release": "git reset && git diff --name-status --exit-code HEAD && git checkout dev && pnpm run lint && cz-update-version && pnpm run build && node build/changelog.mjs && git add . && cz-commit --chore=release",
-    "push-and-publish": "git reset && git diff --name-status --exit-code HEAD && git checkout dev && cz-sync --push --push-tags && git checkout master && npm publish && git checkout dev"
+    "push": "git reset && git diff --name-status --exit-code HEAD && git checkout dev && cz-sync --push --push-tags"
   },
   "dependencies": {
     "hash.js": "^1.1.7",
