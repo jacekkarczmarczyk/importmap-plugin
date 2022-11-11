@@ -1,3 +1,13 @@
+# [0.6.0](https://github.com/jacekkarczmarczyk/importmap-plugin/compare/v0.5.4...v0.6.0) (2022-11-11)
+
+
+### Features
+
+* additional warnings ([098a549](https://github.com/jacekkarczmarczyk/importmap-plugin/commit/098a54992b00c88791aa75fa43d282dcd88d72f8))
+* support different .html file ([1d08191](https://github.com/jacekkarczmarczyk/importmap-plugin/commit/1d081917cbd8f65fbd9ef6cc211fd96ef96ce62d))
+
+
+
 ## [0.5.4](https://github.com/jacekkarczmarczyk/importmap-plugin/compare/v0.5.3...v0.5.4) (2022-11-11)
 
 
