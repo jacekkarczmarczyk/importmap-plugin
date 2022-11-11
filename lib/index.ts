@@ -60,16 +60,29 @@ function createImportMapScript (importMapAsset: OutputAsset, systemJs: boolean, 
     : `<script type="${type}">${importMapSource}</script>`;
 }
 
-export default function ImportmapPlugin ({ base, external = false, indexHtml = 'index.html' }: ImportmapPluginOptions): OutputPlugin {
+export default function ImportmapPlugin ({
+  base,
+  external = false,
+  indexHtml = 'index.html',
+}: ImportmapPluginOptions): OutputPlugin {
   const importMap: ImportMap = { imports: {} };
 
   return {
     name: 'importmap-plugin',
-    generateBundle (config, bundle) {
+    renderStart (config) {
       if (config.format !== 'system' && config.format !== 'es') {
-        throw new Error('Only system and es formats are supported');
+        this.error('This plugin supports only "system"/"systemjs" and "es"/"esm" formats.');
       }
 
+      if (config.format === 'es' && external) {
+        this.warn('Browsers don\'t support native external import maps. There might be a polyfill that you need to add on your own.');
+      }
+
+      if (typeof config.chunkFileNames === 'string' && config.chunkFileNames.toLowerCase().includes('[hash]')) {
+        this.warn('This plugin won\'t do its job if output.chunkFileNames option contain hash.');
+      }
+    },
+    generateBundle (config, bundle) {
       importMap.imports = {};
 
       Object.entries(bundle).forEach(([filename, chunk]) => {
