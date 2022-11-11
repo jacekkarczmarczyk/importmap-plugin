@@ -93,13 +93,20 @@ export default function ImportmapPlugin ({ base, external = false }: ImportmapPl
       const importMapAsset = (bundle.importMap as OutputAsset | undefined) ?? createImportMapAsset(importMap);
       const importMapScript = createImportMapScript(importMapAsset, systemJs, external);
       const entryFileName = `/${String(entryFileNames)}`;
+      const entryDestinationFilename = importMap.imports[entryFileName];
       const indexPath = `${dir}/index.html`;
 
+      if (!entryDestinationFilename) {
+        throw new Error(`Missing import map entry for entry file: ${entryFileName}`);
+      }
+
       Object.keys(importMap.imports).forEach(filename => {
-        if (fs.existsSync(`${dir}${filename}`)) {
-          fs.renameSync(`${dir}${filename}`, `${dir}${importMap.imports[filename]!}`);
+        const destinationFilename = importMap.imports[filename];
+
+        if (fs.existsSync(`${dir}${filename}`) && destinationFilename) {
+          fs.renameSync(`${dir}${filename}`, `${dir}${destinationFilename}`);
         } else {
-          this.warn(`Failed to rename ${dir}${filename} to ${dir}${importMap.imports[filename]!}`);
+          this.warn(`Failed to rename ${dir}${filename} to ${dir}${destinationFilename ?? '<MISSING FILENAME>'}`);
         }
       });
 
@@ -107,7 +114,7 @@ export default function ImportmapPlugin ({ base, external = false }: ImportmapPl
         .readFileSync(indexPath, 'utf-8')
         .replace('</title>', systemJs ? `</title>\n<script src="${base}${bundle.systemJs.fileName}"></script>\n${importMapScript}` : `</title>\n${importMapScript}`)
         .replace('type="module"', systemJs ? 'type="systemjs-module"' : 'type="module"')
-        .replace(`src="${entryFileName}"`, `src="${importMap.imports[entryFileName]!}"`);
+        .replace(`src="${entryFileName}"`, `src="${entryDestinationFilename}"`);
 
       fs.writeFileSync(indexPath, indexHtml);
     },
