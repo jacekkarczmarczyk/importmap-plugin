@@ -3,11 +3,11 @@ lockfileVersion: 5.4
 specifiers:
   '@types/node': ^18.11.9
   conventional-changelog: ^3.1.25
-  cz-deploy: ^1.0.0-rc.2
+  cz-deploy: ^1.0.4
   eslint: ^8.27.0
   eslint-config-jkarczm: ^10.0.0-beta.1
   hash.js: ^1.1.7
-  rollup: ^3.0.0
+  rollup: ^3.2.5
   systemjs: ^6.13.0
   typescript: ^4.8.4
 
@@ -19,7 +19,7 @@ dependencies:
 devDependencies:
   '@types/node': 18.11.9
   conventional-changelog: 3.1.25
-  cz-deploy: 1.0.0-rc.2
+  cz-deploy: 1.0.4
   eslint: 8.27.0
   eslint-config-jkarczm: 10.0.0-beta.1_rmayb2veg2btbq6mbmnyivgasy
   typescript: 4.8.4
@@ -489,6 +489,15 @@ packages:
       wrap-ansi: 7.0.0
     dev: true
 
+  /cliui/8.0.1:
+    resolution: {integrity: sha512-BSeNnyus75C4//NQ9gQt1/csTXyo/8Sb+afLAkzAptFuMsod9HFokGNudZpi/oQV73hnVK+sR+5PVRMd+Dr7YQ==}
+    engines: {node: '>=12'}
+    dependencies:
+      string-width: 4.2.3
+      strip-ansi: 6.0.1
+      wrap-ansi: 7.0.0
+    dev: true
+
   /color-convert/1.9.3:
     resolution: {integrity: sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==}
     dependencies:
@@ -686,13 +695,13 @@ packages:
     hasBin: true
     dev: true
 
-  /cz-deploy/1.0.0-rc.2:
-    resolution: {integrity: sha512-j0Kwtc7OrpClWknfUnoYaClckmqnrUdvPHBZK5hJSRw1Wug4qUjiyCoWMNGLkF0zB10VKYqD59sBrBF6UiXONQ==}
+  /cz-deploy/1.0.4:
+    resolution: {integrity: sha512-umkuMRis5Xvm1mRJZMHvw2sDhI0EMWn6ehqplucAAwEBLeG98o767KyONmQZ7q8YDOkdee4r5Cz2YALleL63wg==}
     hasBin: true
     dependencies:
       semver: 7.3.8
-      simple-git: 2.48.0
-      yargs: 16.2.0
+      simple-git: 3.14.1
+      yargs: 17.6.2
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2440,8 +2449,8 @@ packages:
       object-inspect: 1.12.2
     dev: true
 
-  /simple-git/2.48.0:
-    resolution: {integrity: sha512-z4qtrRuaAFJS4PUd0g+xy7aN4y+RvEt/QTJpR184lhJguBA1S/LsVlvE/CM95RsYMOFJG3NGGDjqFCzKU19S/A==}
+  /simple-git/3.14.1:
+    resolution: {integrity: sha512-1ThF4PamK9wBORVGMK9HK5si4zoGS2GpRO7tkAFObA4FZv6dKaCVHLQT+8zlgiBm6K2h+wEU9yOaFCu/SR3OyA==}
     dependencies:
       '@kwsites/file-exists': 1.1.1
       '@kwsites/promise-deferred': 1.1.1
@@ -2788,6 +2797,11 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
+  /yargs-parser/21.1.1:
+    resolution: {integrity: sha512-tVpsJW7DdjecAiFpbIB1e3qxIQsE6NoPc5/eTdrbbIC4h0LVsWhnoa3g+m2HclBIujHzsxZ4VJVA+GUuc2/LBw==}
+    engines: {node: '>=12'}
+    dev: true
+
   /yargs/16.2.0:
     resolution: {integrity: sha512-D1mvvtDG0L5ft/jGWkLpG1+m0eQxOfaBvTNELraWj22wSVUMWxZUvYgJYcKh6jGGIkJFhH4IZPQhR4TKpc8mBw==}
     engines: {node: '>=10'}
@@ -2799,6 +2813,19 @@ packages:
       string-width: 4.2.3
       y18n: 5.0.8
       yargs-parser: 20.2.9
+    dev: true
+
+  /yargs/17.6.2:
+    resolution: {integrity: sha512-1/9UrdHjDZc0eOU0HxOHoS78C69UD3JRMvzlJ7S79S2nTaWRA/whGCTV8o9e/N/1Va9YIV7Q4sOxD8VV4pCWOw==}
+    engines: {node: '>=12'}
+    dependencies:
+      cliui: 8.0.1
+      escalade: 3.1.1
+      get-caller-file: 2.0.5
+      require-directory: 2.1.1
+      string-width: 4.2.3
+      y18n: 5.0.8
+      yargs-parser: 21.1.1
     dev: true
 
   /yocto-queue/0.1.0:
