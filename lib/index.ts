@@ -5,6 +5,7 @@ import type { OutputAsset, OutputChunk, OutputPlugin } from 'rollup';
 interface ImportmapPluginOptions {
   base: string;
   external: boolean;
+  indexHtml: string;
 }
 
 interface ImportMap {
@@ -59,7 +60,7 @@ function createImportMapScript (importMapAsset: OutputAsset, systemJs: boolean, 
     : `<script type="${type}">${importMapSource}</script>`;
 }
 
-export default function ImportmapPlugin ({ base, external = false }: ImportmapPluginOptions): OutputPlugin {
+export default function ImportmapPlugin ({ base, external = false, indexHtml = 'index.html' }: ImportmapPluginOptions): OutputPlugin {
   const importMap: ImportMap = { imports: {} };
 
   return {
@@ -94,7 +95,7 @@ export default function ImportmapPlugin ({ base, external = false }: ImportmapPl
       const importMapScript = createImportMapScript(importMapAsset, systemJs, external);
       const entryFileName = `/${String(entryFileNames)}`;
       const entryDestinationFilename = importMap.imports[entryFileName];
-      const indexPath = `${dir}/index.html`;
+      const indexPath = `${dir}/${indexHtml}`;
 
       if (!entryDestinationFilename) {
         throw new Error(`Missing import map entry for entry file: ${entryFileName}`);
@@ -110,13 +111,13 @@ export default function ImportmapPlugin ({ base, external = false }: ImportmapPl
         }
       });
 
-      const indexHtml = fs
+      const indexHtmlContents = fs
         .readFileSync(indexPath, 'utf-8')
         .replace('</title>', systemJs ? `</title>\n<script src="${base}${bundle.systemJs.fileName}"></script>\n${importMapScript}` : `</title>\n${importMapScript}`)
         .replace('type="module"', systemJs ? 'type="systemjs-module"' : 'type="module"')
         .replace(`src="${entryFileName}"`, `src="${entryDestinationFilename}"`);
 
-      fs.writeFileSync(indexPath, indexHtml);
+      fs.writeFileSync(indexPath, indexHtmlContents);
     },
   };
 }
