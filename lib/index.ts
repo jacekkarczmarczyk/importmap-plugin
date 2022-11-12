@@ -78,7 +78,15 @@ export default function ImportmapPlugin ({
         this.warn('Browsers don\'t support native external import maps. There might be a polyfill that you need to add on your own.');
       }
 
-      if (typeof config.chunkFileNames === 'string' && config.chunkFileNames.toLowerCase().includes('[hash]')) {
+      if (typeof config.entryFileNames !== 'string') {
+        this.error('output.entryFileNames must be a string.');
+      } else if (config.entryFileNames.toLowerCase().includes('[hash]')) {
+        this.warn('This plugin won\'t do its job if output.entryFileNames option contain hash.');
+      }
+
+      if (typeof config.chunkFileNames !== 'string') {
+        this.error('output.chunkFileNames must be a string.');
+      } else if (config.chunkFileNames.toLowerCase().includes('[hash]')) {
         this.warn('This plugin won\'t do its job if output.chunkFileNames option contain hash.');
       }
     },
