@@ -7,13 +7,13 @@ specifiers:
   eslint: ^8.27.0
   eslint-config-jkarczm: ^10.0.0-beta.1
   hash.js: ^1.1.7
-  rollup: ^3.2.5
+  rollup: ^3.3.0
   systemjs: ^6.13.0
   typescript: ^4.8.4
 
 dependencies:
   hash.js: 1.1.7
-  rollup: 3.2.5
+  rollup: 3.3.0
   systemjs: 6.13.0
 
 devDependencies:
@@ -700,7 +700,7 @@ packages:
     hasBin: true
     dependencies:
       semver: 7.3.8
-      simple-git: 3.14.1
+      simple-git: 3.15.0
       yargs: 17.6.2
     transitivePeerDependencies:
       - supports-color
@@ -2381,8 +2381,8 @@ packages:
       glob: 7.2.3
     dev: true
 
-  /rollup/3.2.5:
-    resolution: {integrity: sha512-/Ha7HhVVofduy+RKWOQJrxe4Qb3xyZo+chcpYiD8SoQa4AG7llhupUtyfKSSrdBM2mWJjhM8wZwmbY23NmlIYw==}
+  /rollup/3.3.0:
+    resolution: {integrity: sha512-wqOV/vUJCYEbWsXvwCkgGWvgaEnsbn4jxBQWKpN816CqsmCimDmCNJI83c6if7QVD4v/zlyRzxN7U2yDT5rfoA==}
     engines: {node: '>=14.18.0', npm: '>=8.0.0'}
     hasBin: true
     optionalDependencies:
@@ -2449,8 +2449,8 @@ packages:
       object-inspect: 1.12.2
     dev: true
 
-  /simple-git/3.14.1:
-    resolution: {integrity: sha512-1ThF4PamK9wBORVGMK9HK5si4zoGS2GpRO7tkAFObA4FZv6dKaCVHLQT+8zlgiBm6K2h+wEU9yOaFCu/SR3OyA==}
+  /simple-git/3.15.0:
+    resolution: {integrity: sha512-FiWoMPlcYHQ+ApRihUsGjC/ZmIlWj62S6MBCwOunczvXcLQt+9ZdrysDrR6QVepkRQfEAaBXrN2QtJKrN6zbtg==}
     dependencies:
       '@kwsites/file-exists': 1.1.1
       '@kwsites/promise-deferred': 1.1.1
