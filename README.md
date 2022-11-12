@@ -11,7 +11,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         format: 'system', // 'system' or 'es'
-        entryFileNames: 'app/index.js', // MUST BE A STRING WITH NO HASH
+        entryFileNames: 'app/index.js', // DO NOT INCLUDE HASH HERE
         chunkFileNames: 'chunks/[name].js', // DO NOT INCLUDE HASH HERE
         plugins: [
           ImportmapPlugin({
