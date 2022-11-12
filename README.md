@@ -1,8 +1,9 @@
 # importmap-plugin
-Rollup import maps plugin
+Vite/Rollup import maps plugin
 
 # Usage
 ```ts
+// vite.config.ts
 import ImportmapPlugin from 'importmap-plugin';
 
 export default defineConfig({
@@ -10,13 +11,13 @@ export default defineConfig({
     rollupOptions: {
       output: {
         format: 'system', // 'system' or 'es'
-        entryFileNames: 'app/index.js',
+        entryFileNames: 'app/index.js', // must be string if provided
         chunkFileNames: 'chunks/[name].js', // DO NOT INCLUDE HASH HERE
         plugins: [
           ImportmapPlugin({
-            base: '/',
+            base: '/', // same as `base` option in Vite config
             external: true, // external import maps work only for SystemJS
-            indexHtml: 'index.html', // same as rollupOptions.input option
+            indexHtml: 'index.html', // entry html file name
           }),
         ],
       },
