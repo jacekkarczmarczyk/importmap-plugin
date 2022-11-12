@@ -1,3 +1,12 @@
+## [0.6.1](https://github.com/jacekkarczmarczyk/importmap-plugin/compare/v0.6.0...v0.6.1) (2022-11-12)
+
+
+### Bug Fixes
+
+* update rollup to 3.3.0 ([733b555](https://github.com/jacekkarczmarczyk/importmap-plugin/commit/733b5553e53b9c4cb5ac06c98f26e9dc9c18c1be))
+
+
+
 # [0.6.0](https://github.com/jacekkarczmarczyk/importmap-plugin/compare/v0.5.4...v0.6.0) (2022-11-11)
 
 
