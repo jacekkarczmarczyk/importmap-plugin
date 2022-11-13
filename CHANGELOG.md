@@ -1,3 +1,11 @@
+## <small>0.6.2 (2022-11-13)</small>
+
+* fix: warn if chunkFileNames/entryFileNames is not a string or if entryFileNames contains hash ([0355d27](https://github.com/jacekkarczmarczyk/importmap-plugin/commit/0355d27))
+* fix: wrongly calculated hash for importMap ([ec376be](https://github.com/jacekkarczmarczyk/importmap-plugin/commit/ec376be))
+* chore: fix generating changelog ([7a70dec](https://github.com/jacekkarczmarczyk/importmap-plugin/commit/7a70dec))
+
+
+
 ## <small>0.6.1 (2022-11-12)</small>
 
 * chore: add info about indexHtml option ([0e486f2](https://github.com/jacekkarczmarczyk/importmap-plugin/commit/0e486f2))
