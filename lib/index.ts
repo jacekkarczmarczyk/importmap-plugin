@@ -16,7 +16,7 @@ interface ImportMap {
 
 function createImportMapAsset (importMap: ImportMap): OutputAsset {
   const source = JSON.stringify(importMap);
-  const hashValue = hash.sha1().update(importMap).digest('hex');
+  const hashValue = hash.sha1().update(source).digest('hex');
 
   return {
     type: 'asset',
