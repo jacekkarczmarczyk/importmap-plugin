@@ -1,3 +1,10 @@
+## 0.7.0 (2022-11-25)
+
+* feat: hash length ([413e452](https://github.com/jacekkarczmarczyk/importmap-plugin/commit/413e452))
+* chore: bump deps ([ea73532](https://github.com/jacekkarczmarczyk/importmap-plugin/commit/ea73532))
+
+
+
 ## <small>0.6.2 (2022-11-13)</small>
 
 * fix: warn if chunkFileNames/entryFileNames is not a string or if entryFileNames contains hash ([0355d27](https://github.com/jacekkarczmarczyk/importmap-plugin/commit/0355d27))
