@@ -6,6 +6,7 @@ interface ImportmapPluginOptions {
   base: string;
   external: boolean;
   indexHtml: string;
+  hashLength: number;
 }
 
 interface ImportMap {
@@ -14,9 +15,9 @@ interface ImportMap {
   };
 }
 
-function createImportMapAsset (importMap: ImportMap): OutputAsset {
+function createImportMapAsset (importMap: ImportMap, options: ImportmapPluginOptions): OutputAsset {
   const source = JSON.stringify(importMap);
-  const hashValue = hash.sha1().update(source).digest('hex');
+  const hashValue = hash.sha1().update(source).digest('hex').substring(0, options.hashLength);
 
   return {
     type: 'asset',
@@ -26,9 +27,9 @@ function createImportMapAsset (importMap: ImportMap): OutputAsset {
   };
 }
 
-function createSystemJsChunk (): OutputChunk {
+function createSystemJsChunk (options: ImportmapPluginOptions): OutputChunk {
   const systemJsCode = fs.readFileSync(require.resolve('systemjs/dist/s.js'), 'utf8');
-  const systemJsHash = hash.sha1().update(systemJsCode).digest('hex');
+  const systemJsHash = hash.sha1().update(systemJsCode).digest('hex').substring(0, options.hashLength);
 
   return {
     fileName: `s.${systemJsHash}.js`,
@@ -63,9 +64,11 @@ function createImportMapScript (importMapAsset: OutputAsset, systemJs: boolean, 
 export default function ImportmapPlugin ({
   base,
   external = false,
+  hashLength = 8,
   indexHtml = 'index.html',
 }: ImportmapPluginOptions): OutputPlugin {
   const importMap: ImportMap = { imports: {} };
+  const options = { base, external, indexHtml, hashLength };
 
   return {
     name: 'importmap-plugin',
@@ -96,23 +99,23 @@ export default function ImportmapPlugin ({
       Object.entries(bundle).forEach(([filename, chunk]) => {
         if (chunk.type !== 'chunk') return;
 
-        const hashValue = hash.sha1().update(chunk.code).digest('hex');
+        const hashValue = hash.sha1().update(chunk.code).digest('hex').substring(0, hashLength);
 
         importMap.imports[`${base}${filename}`] = `${base}${filename}`.replace(/\.js$/, `.${hashValue}.js`);
       });
 
       if (external) {
-        bundle.importMap = createImportMapAsset(importMap);
+        bundle.importMap = createImportMapAsset(importMap, options);
       }
 
       if (config.format === 'system') {
-        bundle.systemJs = createSystemJsChunk();
+        bundle.systemJs = createSystemJsChunk(options);
       }
     },
     writeBundle (config, bundle) {
       const { dir = './dist', entryFileNames } = config;
       const systemJs = config.format === 'system';
-      const importMapAsset = (bundle.importMap as OutputAsset | undefined) ?? createImportMapAsset(importMap);
+      const importMapAsset = (bundle.importMap as OutputAsset | undefined) ?? createImportMapAsset(importMap, options);
       const importMapScript = createImportMapScript(importMapAsset, systemJs, external);
       const entryFileName = `/${String(entryFileNames)}`;
       const entryDestinationFilename = importMap.imports[entryFileName];
