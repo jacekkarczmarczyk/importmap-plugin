@@ -1,3 +1,10 @@
+## 0.8.0 (2022-12-09)
+
+* fix: allow options defaults ([1d3b1ac](https://github.com/jacekkarczmarczyk/importmap-plugin/commit/1d3b1ac))
+* feat: bump deps ([e2b2924](https://github.com/jacekkarczmarczyk/importmap-plugin/commit/e2b2924))
+
+
+
 ## 0.7.0 (2022-11-25)
 
 * feat: hash length ([413e452](https://github.com/jacekkarczmarczyk/importmap-plugin/commit/413e452))
