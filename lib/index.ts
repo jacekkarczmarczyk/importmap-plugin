@@ -61,14 +61,17 @@ function createImportMapScript (importMapAsset: OutputAsset, systemJs: boolean, 
     : `<script type="${type}">${importMapSource}</script>`;
 }
 
-export default function ImportmapPlugin ({
-  base,
-  external = false,
-  hashLength = 8,
-  indexHtml = 'index.html',
-}: ImportmapPluginOptions): OutputPlugin {
-  const importMap: ImportMap = { imports: {} };
-  const options = { base, external, indexHtml, hashLength };
+export default function ImportmapPlugin (partialOptions: Partial<ImportmapPluginOptions>): OutputPlugin {
+  const options = {
+    base: '/',
+    external: false,
+    hashLength: 8,
+    indexHtml: 'index.html',
+    ...partialOptions,
+  };
+  const importMap: ImportMap = {
+    imports: {},
+  };
 
   return {
     name: 'importmap-plugin',
@@ -77,7 +80,7 @@ export default function ImportmapPlugin ({
         this.error('This plugin supports only "system"/"systemjs" and "es"/"esm" formats.');
       }
 
-      if (config.format === 'es' && external) {
+      if (config.format === 'es' && options.external) {
         this.warn('Browsers don\'t support native external import maps. There might be a polyfill that you need to add on your own.');
       }
 
@@ -99,12 +102,12 @@ export default function ImportmapPlugin ({
       Object.entries(bundle).forEach(([filename, chunk]) => {
         if (chunk.type !== 'chunk') return;
 
-        const hashValue = hash.sha1().update(chunk.code).digest('hex').substring(0, hashLength);
+        const hashValue = hash.sha1().update(chunk.code).digest('hex').substring(0, options.hashLength);
 
-        importMap.imports[`${base}${filename}`] = `${base}${filename}`.replace(/\.js$/, `.${hashValue}.js`);
+        importMap.imports[`${options.base}${filename}`] = `${options.base}${filename}`.replace(/\.js$/, `.${hashValue}.js`);
       });
 
-      if (external) {
+      if (options.external) {
         bundle.importMap = createImportMapAsset(importMap, options);
       }
 
@@ -116,10 +119,10 @@ export default function ImportmapPlugin ({
       const { dir = './dist', entryFileNames } = config;
       const systemJs = config.format === 'system';
       const importMapAsset = (bundle.importMap as OutputAsset | undefined) ?? createImportMapAsset(importMap, options);
-      const importMapScript = createImportMapScript(importMapAsset, systemJs, external);
+      const importMapScript = createImportMapScript(importMapAsset, systemJs, options.external);
       const entryFileName = `/${String(entryFileNames)}`;
       const entryDestinationFilename = importMap.imports[entryFileName];
-      const indexPath = `${dir}/${indexHtml}`;
+      const indexPath = `${dir}/${options.indexHtml}`;
 
       if (!entryDestinationFilename) {
         throw new Error(`Missing import map entry for entry file: ${entryFileName}`);
@@ -137,7 +140,7 @@ export default function ImportmapPlugin ({
 
       const indexHtmlContents = fs
         .readFileSync(indexPath, 'utf-8')
-        .replace('</title>', systemJs ? `</title>\n<script src="${base}${bundle.systemJs.fileName}"></script>\n${importMapScript}` : `</title>\n${importMapScript}`)
+        .replace('</title>', systemJs ? `</title>\n<script src="${options.base}${bundle.systemJs.fileName}"></script>\n${importMapScript}` : `</title>\n${importMapScript}`)
         .replace('type="module"', systemJs ? 'type="systemjs-module"' : 'type="module"')
         .replace(`src="${entryFileName}"`, `src="${entryDestinationFilename}"`);
 
