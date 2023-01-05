@@ -18,6 +18,7 @@ export default defineConfig({
             base: '/', // same as `base` option in Vite config
             external: true, // external import maps work only for SystemJS
             indexHtml: 'index.html', // entry html file name
+            hashLength: 8,
           }),
         ],
       },
